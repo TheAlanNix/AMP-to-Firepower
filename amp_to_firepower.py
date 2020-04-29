@@ -209,12 +209,19 @@ def main():
         csv_writer.writerow(['ScanFlush'])
 
     # Import the data into the FMC
-    pipe = subprocess.call(["./sf_host_input_agent.pl",
-                            "-server={}".format(os.getenv("FIREPOWER_FQDN")),
-                            "-password={}".format(os.getenv("FIREPOWER_CERT_PASS")),
-                            "-plugininfo=../endpoint_data.csv",
-                            "csv"],
-                           cwd=f"{os.getcwd()}/HostInputSDK")
+    if os.getenv("FIREPOWER_CERT_PASS"):
+        pipe = subprocess.call(["./sf_host_input_agent.pl",
+                                "-server={}".format(os.getenv("FIREPOWER_FQDN")),
+                                "-password={}".format(os.getenv("FIREPOWER_CERT_PASS")),
+                                "-plugininfo=../endpoint_data.csv",
+                                "csv"],
+                               cwd=f"{os.getcwd()}/HostInputSDK")
+    else:
+        pipe = subprocess.call(["./sf_host_input_agent.pl",
+                                "-server={}".format(os.getenv("FIREPOWER_FQDN")),
+                                "-plugininfo=../endpoint_data.csv",
+                                "csv"],
+                               cwd=f"{os.getcwd()}/HostInputSDK")
 
 
 if __name__ == "__main__":
