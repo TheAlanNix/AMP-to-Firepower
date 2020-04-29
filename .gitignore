@@ -1,0 +1,6 @@
+endpoint_data.csv
+.env
+*.pkcs12
+__pycache__
+venv/
+.vscode
